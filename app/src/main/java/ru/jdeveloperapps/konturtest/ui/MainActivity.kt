@@ -1,7 +1,8 @@
-package ru.jdeveloperapps.konturtest
+package ru.jdeveloperapps.konturtest.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import ru.jdeveloperapps.konturtest.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
