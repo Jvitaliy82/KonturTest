@@ -1,14 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_16sdp"
     tools:context=".ui.fragments.DetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Carol Rodriquiez"
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/_18ssp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="+7 (999) 123-4567"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/textClicked"
+        android:textSize="@dimen/_14ssp" />
+
+    <TextView
+        android:id="@+id/temperament"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Chloric"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/textGray"
+        android:textSize="@dimen/_12ssp" />
+
+    <TextView
+        android:id="@+id/educationPeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="13.11.2001 - 29.07.2018"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/textGray"
+        android:textSize="@dimen/_12ssp" />
+
+    <TextView
+        android:id="@+id/biography"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Non culpa occaecat occaecat sit occaecat aliquip esse Lorem voluptate commodo veniam ipsum velit. Mollit sunt quis reprehenderit pariatur Lorem consequat magna. Nulla nostrud ad deserunt tempor proident enim exercitation sit ullamco aliquip."
+        android:layout_marginTop="@dimen/_4sdp"
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/_12ssp" />
+</LinearLayout>

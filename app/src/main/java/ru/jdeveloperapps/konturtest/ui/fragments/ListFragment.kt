@@ -1,8 +1,10 @@
 package ru.jdeveloperapps.konturtest.ui.fragments
 
+import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.jdeveloperapps.konturtest.R
@@ -21,6 +23,15 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         recyclerView.adapter = mAdapter
+        mAdapter.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("user", it)
+            }
+            findNavController().navigate(
+                R.id.action_listFragment_to_detailFragment,
+                bundle
+            )
+        }
         viewModel.localData.observe(viewLifecycleOwner, {
             mAdapter.differ.submitList(it)
         })

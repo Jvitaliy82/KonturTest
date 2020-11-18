@@ -18,5 +18,9 @@
         android:id="@+id/detailFragment"
         android:name="ru.jdeveloperapps.konturtest.ui.fragments.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="user"
+            app:argType="ru.jdeveloperapps.konturtest.models.UserItem" />
+    </fragment>
 </navigation>

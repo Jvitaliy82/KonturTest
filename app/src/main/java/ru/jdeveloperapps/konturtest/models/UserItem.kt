@@ -3,6 +3,7 @@ package ru.jdeveloperapps.konturtest.models
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "users_table")
 data class UserItem(
@@ -15,4 +16,4 @@ data class UserItem(
     val name: String,
     val phone: String,
     val temperament: String
-)
+) : Serializable

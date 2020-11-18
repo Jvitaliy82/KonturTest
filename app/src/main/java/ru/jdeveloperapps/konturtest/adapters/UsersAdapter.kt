@@ -12,6 +12,12 @@ import ru.jdeveloperapps.konturtest.models.UserItem
 
 class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
 
+    private var onItemClickListener: ((UserItem) -> Unit)? = null
+
+    fun setOnClickListener(listener: (UserItem) -> Unit) {
+        onItemClickListener = listener
+    }
+
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     private val differCallBack = object : DiffUtil.ItemCallback<UserItem>() {
@@ -39,6 +45,9 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
             name.text = curItem.name
             phone.text = curItem.phone
             heightText.text = curItem.height.toString()
+            setOnClickListener {
+                onItemClickListener?.let { it(curItem) }
+            }
         }
     }
 
