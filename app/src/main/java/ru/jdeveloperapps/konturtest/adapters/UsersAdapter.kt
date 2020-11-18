@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_recycler.view.*
 import ru.jdeveloperapps.konturtest.R
-import ru.jdeveloperapps.konturtest.api.models.UserItem
+import ru.jdeveloperapps.konturtest.models.UserItem
 
-class ListAdapter : RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

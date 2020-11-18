@@ -1,4 +1,4 @@
-package ru.jdeveloperapps.konturtest.api.models
+package ru.jdeveloperapps.konturtest.models
 
 data class EducationPeriod(
     val end: String,
