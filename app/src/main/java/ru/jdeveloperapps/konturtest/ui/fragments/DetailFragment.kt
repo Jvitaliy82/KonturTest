@@ -1,5 +1,7 @@
 package ru.jdeveloperapps.konturtest.ui.fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -19,5 +21,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         temperament.text = userItem.temperament
         educationPeriod.text = userItem.educationPeriod.start
         biography.text = userItem.biography
+
+        phone.setOnClickListener {
+            val intent = Intent(Intent.ACTION_DIAL)
+            intent.setData(Uri.parse("tel:${userItem.phone}"))
+            startActivity(intent)
+        }
     }
 }

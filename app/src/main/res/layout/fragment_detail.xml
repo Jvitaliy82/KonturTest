@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="+7 (999) 123-4567"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/textClicked"
         android:textSize="@dimen/_14ssp" />
 
@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Chloric"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/textGray"
         android:textSize="@dimen/_12ssp" />
 
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="13.11.2001 - 29.07.2018"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/textGray"
         android:textSize="@dimen/_12ssp" />
 
@@ -47,7 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Non culpa occaecat occaecat sit occaecat aliquip esse Lorem voluptate commodo veniam ipsum velit. Mollit sunt quis reprehenderit pariatur Lorem consequat magna. Nulla nostrud ad deserunt tempor proident enim exercitation sit ullamco aliquip."
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:textColor="@color/textBlack"
         android:textSize="@dimen/_12ssp" />
 </LinearLayout>
