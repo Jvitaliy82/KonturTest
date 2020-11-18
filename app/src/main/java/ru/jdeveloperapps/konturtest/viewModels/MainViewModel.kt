@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.jdeveloperapps.konturtest.models.UserItem
 import ru.jdeveloperapps.konturtest.repositories.UsersRepository
@@ -15,13 +14,13 @@ class MainViewModel @ViewModelInject constructor(
     private val usersRepository: UsersRepository
 ): AndroidViewModel(app) {
 
-    val localData: LiveData<List<UserItem>> = usersRepository.getAllUsers()
+    val localData: LiveData<List<UserItem>> = usersRepository.getAllUsersFromDb()
 
     fun updateData() {
 
-        usersRepository.getUsers()
+        usersRepository.getUsersFromNet()
             .subscribeOn(Schedulers.io())
-            .map { listUsers -> usersRepository.updateUsers(listUsers.Users) }
+            .map { listUserItem -> usersRepository.updateUsersInDb(listUserItem) }
             .subscribe({ listUsers ->
                 Log.d("TTT", listUsers.toString())
             }, {e ->
