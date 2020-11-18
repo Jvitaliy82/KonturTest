@@ -3,13 +3,13 @@ package ru.jdeveloperapps.konturtest.ui.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.jdeveloperapps.konturtest.R
 import ru.jdeveloperapps.konturtest.adapters.UsersAdapter
 import ru.jdeveloperapps.konturtest.other.Resourse
+import ru.jdeveloperapps.konturtest.ui.MainActivity
 import ru.jdeveloperapps.konturtest.viewModels.MainViewModel
 
 @AndroidEntryPoint
@@ -20,7 +20,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     override fun onResume() {
         super.onResume()
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel = (activity as MainActivity).viewModel
 
         recyclerView.adapter = mAdapter
         mAdapter.setOnClickListener {
@@ -43,7 +43,5 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 is Resourse.Error -> {}
             }
         })
-
-        viewModel.updateData()
     }
 }
