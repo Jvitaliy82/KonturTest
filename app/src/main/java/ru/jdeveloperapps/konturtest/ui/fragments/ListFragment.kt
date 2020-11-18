@@ -22,6 +22,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         super.onResume()
         viewModel = (activity as MainActivity).viewModel
 
+        swipe_container.setOnRefreshListener {
+            viewModel.updateData()
+        }
+
         recyclerView.adapter = mAdapter
         mAdapter.setOnClickListener {
             val bundle = Bundle().apply {
@@ -38,7 +42,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
         viewModel.stateData.observe(viewLifecycleOwner, {
             when (it) {
-                is Resourse.Success -> progressBar.visibility = View.GONE
+                is Resourse.Success -> {
+                    progressBar.visibility = View.GONE
+                    swipe_container.isRefreshing = false
+                }
                 is Resourse.Loading -> progressBar.visibility = View.VISIBLE
                 is Resourse.Error -> {}
             }

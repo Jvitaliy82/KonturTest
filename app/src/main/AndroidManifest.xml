@@ -3,7 +3,6 @@
     package="ru.jdeveloperapps.konturtest">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
     <application
         android:allowBackup="true"
         android:name=".App"
