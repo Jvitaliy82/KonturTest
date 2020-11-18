@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
-        android:id="@+id/telephone"
+        android:id="@+id/phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="+7 (999) 123-4567"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
-        android:id="@+id/weight"
+        android:id="@+id/heightText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="195.3"
