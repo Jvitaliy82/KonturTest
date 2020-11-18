@@ -1,5 +1,6 @@
 package ru.jdeveloperapps.konturtest.ui
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -11,10 +12,16 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.jdeveloperapps.konturtest.R
+import ru.jdeveloperapps.konturtest.other.Constants.Companion.KEY_LAST_DOWNLOAD
 import ru.jdeveloperapps.konturtest.viewModels.MainViewModel
+import java.util.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    @Inject
+    lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -33,7 +40,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        viewModel.updateData()
+
+        if ((Date().time - sharedPreferences.getLong(KEY_LAST_DOWNLOAD, 0L)) > 60000) {
+            viewModel.updateData()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

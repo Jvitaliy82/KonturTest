@@ -8,7 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import ru.jdeveloperapps.konturtest.db.UserDatabase
-import ru.jdeveloperapps.konturtest.repositories.UsersRepository
+import ru.jdeveloperapps.konturtest.other.Constants.Companion.SHARED_PREFERENCE_NAME
 import javax.inject.Singleton
 
 @Module
@@ -28,8 +28,9 @@ class AppModule {
     @Provides
     fun provideForecastDao(db: UserDatabase) = db.userDao()
 
-//    @Singleton
-//    @Provides
-//    fun provideRepository() = UsersRepository()
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(@ApplicationContext app: Context) =
+        app.getSharedPreferences(SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
 
 }
