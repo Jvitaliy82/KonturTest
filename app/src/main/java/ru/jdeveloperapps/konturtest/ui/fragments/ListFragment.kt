@@ -2,8 +2,10 @@ package ru.jdeveloperapps.konturtest.ui.fragments
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.jdeveloperapps.konturtest.R
@@ -47,7 +49,11 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     swipe_container.isRefreshing = false
                 }
                 is Resourse.Loading -> progressBar.visibility = View.VISIBLE
-                is Resourse.Error -> {}
+                is Resourse.Error -> {
+                    progressBar.visibility = View.GONE
+                    swipe_container.isRefreshing = false
+                    Snackbar.make(swipe_container, it.message.toString(), Snackbar.LENGTH_LONG).show()
+                }
             }
         })
     }
