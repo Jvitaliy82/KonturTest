@@ -1,6 +1,7 @@
 package ru.jdeveloperapps.konturtest.repositories
 
 import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 import ru.jdeveloperapps.konturtest.api.RetrofitInstance
 import ru.jdeveloperapps.konturtest.db.UserDao
 import ru.jdeveloperapps.konturtest.models.UserItem
