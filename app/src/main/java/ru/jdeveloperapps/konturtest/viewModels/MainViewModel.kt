@@ -2,7 +2,6 @@ package ru.jdeveloperapps.konturtest.viewModels
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,14 +27,9 @@ class MainViewModel @ViewModelInject constructor(
         usersRepository.getUsersFromNet()
             .subscribeOn(Schedulers.io())
             .map { listUserItem -> usersRepository.updateUsersInDb(listUserItem) }
-//            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ listUsers ->
-                Log.d("TTT", "что то работает")
-            }, {e ->
-                Log.d("TTT", e.message.toString())
+            .subscribe({ }, {e ->
                 stateData.postValue(Resourse.Error(e.message.toString()))
             }, {
-                Log.d("TTT", "Завершено")
                 stateData.postValue(Resourse.Success())
                 sharedPreferences.edit().putLong(KEY_LAST_DOWNLOAD, Date().time).apply()
             })
