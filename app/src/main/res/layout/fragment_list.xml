@@ -9,6 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.fragments.ListFragment">
 
         <LinearLayout
@@ -27,7 +28,7 @@
                 android:layout_margin="@dimen/_8sdp"
                 android:queryHint="Поиск"
                 android:padding="@dimen/_4sdp"
-                android:background="@drawable/background_search"/>
+                android:background="@drawable/background_search" />
         </LinearLayout>
 
         <ProgressBar

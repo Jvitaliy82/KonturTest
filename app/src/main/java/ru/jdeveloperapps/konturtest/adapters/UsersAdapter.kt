@@ -3,34 +3,34 @@ package ru.jdeveloperapps.konturtest.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.google.common.base.CharMatcher
 import kotlinx.android.synthetic.main.item_recycler.view.*
 import ru.jdeveloperapps.konturtest.R
 import ru.jdeveloperapps.konturtest.models.UserItem
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
+
+class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>(), Filterable {
 
     private var onItemClickListener: ((UserItem) -> Unit)? = null
+    private var currentList = listOf<UserItem>()
+    private var fullList = mutableListOf<UserItem>()
 
     fun setOnClickListener(listener: (UserItem) -> Unit) {
         onItemClickListener = listener
     }
 
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-
-    private val differCallBack = object : DiffUtil.ItemCallback<UserItem>() {
-        override fun areItemsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: UserItem, newItem: UserItem): Boolean {
-            return oldItem == newItem
-        }
+    fun submitList(listUserItem: List<UserItem>) {
+//        differ.submitList(listUserItem)
+        currentList = listUserItem
+        fullList.clear()
+        fullList.addAll(listUserItem)
+        notifyDataSetChanged()
     }
 
-    val differ = AsyncListDiffer(this, differCallBack)
+    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         return ListViewHolder(
@@ -40,7 +40,7 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        val curItem = differ.currentList[position]
+        val curItem = currentList[position]
         holder.itemView.apply {
             name.text = curItem.name
             phone.text = curItem.phone
@@ -52,6 +52,36 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>() {
     }
 
     override fun getItemCount(): Int =
-        differ.currentList.size
+        currentList.size
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(charSequence: CharSequence): FilterResults {
+                var filteredList = mutableListOf<UserItem>()
+                if (charSequence.isNullOrEmpty()) {
+                    filteredList.addAll(fullList)
+                } else {
+                    val filterPattern = charSequence.toString().trim()
+                    filteredList = fullList.filter { item ->
+                        item.name.contains(filterPattern, true) ||
+//                                item.phone.replace("""\D+""".toRegex(), "")
+//                                    .contains(filterPattern, true)
+                        CharMatcher.inRange('0','9').retainFrom(item.phone).contains(filterPattern)
+                    }.toMutableList()
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
+                filterResults.values?.let {
+                    currentList = filterResults.values as List<UserItem>
+                }
+                notifyDataSetChanged()
+            }
+        }
+    }
 
 }
