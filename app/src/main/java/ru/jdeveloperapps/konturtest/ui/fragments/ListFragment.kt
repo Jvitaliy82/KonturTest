@@ -30,31 +30,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         super.onResume()
         viewModel = (activity as MainActivity).viewModel
 
-        swipe_container.setOnRefreshListener {
-            viewModel.updateData()
-        }
+        setSwipeContainer()
 
-        searchView.setOnClickListener {
-            searchView
-        }
+        setRecyclerView()
 
-        recyclerView.adapter = mAdapter
-        recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
-        )
-
-        mAdapter.setOnClickListener {
-            val bundle = Bundle().apply {
-                putSerializable("user", it)
-            }
-            findNavController().navigate(
-                R.id.action_listFragment_to_detailFragment,
-                bundle
-            )
-        }
         viewModel.localData.observe(viewLifecycleOwner, {
             mAdapter.submitList(it)
         })
@@ -65,7 +44,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                     progressBar.visibility = View.GONE
                     swipe_container.isRefreshing = false
                 }
-                is Resourse.Loading -> progressBar.visibility = View.VISIBLE
+                is Resourse.Loading -> {
+                    swipe_container.isRefreshing = false
+                    progressBar.visibility = View.VISIBLE
+                }
                 is Resourse.Error -> {
                     progressBar.visibility = View.GONE
                     swipe_container.isRefreshing = false
@@ -79,8 +61,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 }
             }
         })
-
-
 
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -107,5 +87,35 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             }, { e ->
                 Log.d("TTT", "error: ${e.message}")
             }, {})
+    }
+
+    private fun setSwipeContainer() {
+        swipe_container.setOnRefreshListener {
+            viewModel.updateData()
+        }
+
+        searchView.setOnClickListener {
+            (searchView as SearchView).onActionViewExpanded()
+        }
+    }
+
+    private fun setRecyclerView() {
+        recyclerView.adapter = mAdapter
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
+
+        mAdapter.setOnClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("user", it)
+            }
+            findNavController().navigate(
+                R.id.action_listFragment_to_detailFragment,
+                bundle
+            )
+        }
     }
 }

@@ -19,12 +19,14 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         name.text = userItem.name
         phone.text = userItem.phone
         temperament.text = userItem.temperament
-        educationPeriod.text = "${userItem.educationPeriod.start.substringBefore("T")} - ${userItem.educationPeriod.end.substringBefore("T")}"
+        val startDate = userItem.educationPeriod.start.substringBefore("T")
+        val endDate = userItem.educationPeriod.end.substringBefore("T")
+        educationPeriod.text = "$startDate - $endDate"
         biography.text = userItem.biography
 
         phone.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.setData(Uri.parse("tel:${userItem.phone}"))
+            intent.data = Uri.parse("tel:${userItem.phone}")
             startActivity(intent)
         }
     }
