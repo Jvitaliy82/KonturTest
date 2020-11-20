@@ -1,9 +1,7 @@
 package ru.jdeveloperapps.konturtest.other
 
-sealed class Resourse(
-    val message: String? = null
-) {
-    class Success : Resourse()
-    class Error(message: String) : Resourse(message)
-    class Loading : Resourse()
+sealed class Resourse{
+    object Success : Resourse()
+    data class Error(val content: Event<String>) : Resourse()
+    object Loading : Resourse()
 }

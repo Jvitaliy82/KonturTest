@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.ObservableOnSubscribe
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_list.*
 import ru.jdeveloperapps.konturtest.R
 import ru.jdeveloperapps.konturtest.adapters.UsersAdapter
@@ -26,7 +25,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     lateinit var viewModel: MainViewModel
     private val mAdapter = UsersAdapter()
-    private val disposable = CompositeDisposable()
 
     override fun onResume() {
         super.onResume()
@@ -61,8 +59,8 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             mAdapter.submitList(it)
         })
 
-        viewModel.stateData.observe(viewLifecycleOwner, {
-            when (it) {
+        viewModel.stateData.observe(viewLifecycleOwner, { data ->
+            when (data) {
                 is Resourse.Success -> {
                     progressBar.visibility = View.GONE
                     swipe_container.isRefreshing = false
@@ -71,8 +69,13 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 is Resourse.Error -> {
                     progressBar.visibility = View.GONE
                     swipe_container.isRefreshing = false
-                    Snackbar.make(swipe_container, it.message.toString(), Snackbar.LENGTH_LONG)
-                        .show()
+                    if (!data.content.hasBeenHandled)
+                        Snackbar.make(
+                            swipe_container,
+                            data.content.getContentOrNull().toString(),
+                            Snackbar.LENGTH_LONG
+                        )
+                            .show()
                 }
             }
         })
@@ -82,6 +85,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         Observable.create(ObservableOnSubscribe<String> { subscriber ->
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let {
+                        subscriber.onNext(query)
+                    }
                     return false
                 }
 
@@ -94,9 +100,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
             })
         })
-            .map {text -> text.trim()}
+            .map { text -> text.trim() }
             .distinctUntilChanged()
-            .subscribe( {text ->
+            .subscribe({ text ->
                 mAdapter.filter.filter(text)
             }, { e ->
                 Log.d("TTT", "error: ${e.message}")

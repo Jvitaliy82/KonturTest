@@ -19,7 +19,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         name.text = userItem.name
         phone.text = userItem.phone
         temperament.text = userItem.temperament
-        educationPeriod.text = userItem.educationPeriod.start
+        educationPeriod.text = "${userItem.educationPeriod.start.substringBefore("T")} - ${userItem.educationPeriod.end.substringBefore("T")}"
         biography.text = userItem.biography
 
         phone.setOnClickListener {
