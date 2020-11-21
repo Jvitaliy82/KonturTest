@@ -2,4 +2,5 @@
 <resources>
     <string name="app_name">KonturTest</string>
     <string name="no_internet">Нет подключения к сети</string>
+    <string name="load_error">Ошибка загрузки данных</string>
 </resources>

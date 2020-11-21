@@ -10,6 +10,7 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import ru.jdeveloperapps.konturtest.App
 import ru.jdeveloperapps.konturtest.R
@@ -26,6 +27,8 @@ class MainViewModel @ViewModelInject constructor(
     private val sharedPreferences: SharedPreferences
 ): AndroidViewModel(app) {
 
+    private val disposables = CompositeDisposable()
+
     val localData: LiveData<List<UserItem>> = usersRepository.getAllUsersFromDb()
     val stateData: MutableLiveData<Resourse> = MutableLiveData()
     var lastSearch: String = ""
@@ -33,15 +36,18 @@ class MainViewModel @ViewModelInject constructor(
     fun updateData() {
         if (hasInternetConnection()) {
             stateData.postValue(Resourse.Loading)
-            usersRepository.getUsersFromNet()
+            disposables.add(
+                usersRepository.getUsersFromNet()
                 .subscribeOn(Schedulers.io())
                 .map { listUserItem -> usersRepository.updateUsersInDb(listUserItem) }
                 .subscribe({ }, { e ->
-                    stateData.postValue(Resourse.Error(Event(e.message.toString())))
+                    stateData.postValue(Resourse.Error(Event(getApplication<App>()
+                        .getString(R.string.load_error))))
                 }, {
                     stateData.postValue(Resourse.Success)
                     sharedPreferences.edit().putLong(KEY_LAST_DOWNLOAD, Date().time).apply()
                 })
+            )
         } else {
             stateData.postValue(Resourse.Error(Event(getApplication<App>()
                 .getString(R.string.no_internet))))
@@ -72,5 +78,10 @@ class MainViewModel @ViewModelInject constructor(
             }
         }
         return false
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposables.dispose()
     }
 }
