@@ -57,6 +57,7 @@ dependencies {
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     // Architectural Components
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
@@ -69,9 +70,6 @@ dependencies {
     //RxJava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-
-    //RxAdapter
-    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
 
     // Dagger Core
     implementation "com.google.dagger:dagger:2.28.1"

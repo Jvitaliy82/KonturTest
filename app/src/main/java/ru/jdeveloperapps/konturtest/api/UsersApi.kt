@@ -10,10 +10,4 @@ interface UsersApi {
     @GET("{source}")
     fun getContacts(@Path("source") source: String): Observable<List<UserItem>>
 
-//    @GET("generated-02.json")
-//    fun getList2(): Observable<List<UserItem>>
-//
-//    @GET("generated-03.json")
-//    fun getList3(): Observable<List<UserItem>>
-
 }

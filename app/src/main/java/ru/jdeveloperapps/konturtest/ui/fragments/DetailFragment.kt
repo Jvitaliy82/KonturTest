@@ -19,9 +19,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         name.text = userItem.name
         phone.text = userItem.phone
         temperament.text = userItem.temperament
-        val startDate = userItem.educationPeriod.start.substringBefore("T")
-        val endDate = userItem.educationPeriod.end.substringBefore("T")
-        educationPeriod.text = "$startDate - $endDate"
+        educationPeriod.text = userItem.educationPeriod.toString()
         biography.text = userItem.biography
 
         phone.setOnClickListener {
