@@ -86,13 +86,18 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             }, { e ->
             }, {})
 
+        setLastSearch()
+
+        //for clickable all field search view
+        searchView.setOnClickListener {
+            (searchView as SearchView).onActionViewExpanded()
+        }
+    }
+
+    private fun setLastSearch() {
         if (viewModel.lastSearch.isNotEmpty()) {
             (searchView as SearchView).onActionViewExpanded()
             searchView.setQuery(viewModel.lastSearch, false)
-        }
-
-        searchView.setOnClickListener {
-            (searchView as SearchView).onActionViewExpanded()
         }
     }
 

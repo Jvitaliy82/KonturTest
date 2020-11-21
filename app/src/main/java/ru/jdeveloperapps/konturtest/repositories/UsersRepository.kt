@@ -1,19 +1,25 @@
 package ru.jdeveloperapps.konturtest.repositories
 
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
-import ru.jdeveloperapps.konturtest.api.RetrofitInstance
+import ru.jdeveloperapps.konturtest.api.UsersApi
 import ru.jdeveloperapps.konturtest.db.UserDao
 import ru.jdeveloperapps.konturtest.models.UserItem
+import ru.jdeveloperapps.konturtest.other.Constants.Companion.SOURCE_1
+import ru.jdeveloperapps.konturtest.other.Constants.Companion.SOURCE_2
+import ru.jdeveloperapps.konturtest.other.Constants.Companion.SOURCE_3
 import javax.inject.Inject
 
-class UsersRepository  @Inject constructor(private val userDao: UserDao){
+class UsersRepository  @Inject constructor(
+    private val userDao: UserDao,
+    private val usersApi: UsersApi
+){
 
     fun getUsersFromNet(): Observable<List<UserItem>> {
         return Observable.mergeDelayError(
-            RetrofitInstance.api.getList1(),
-            RetrofitInstance.api.getList2(),
-            RetrofitInstance.api.getList3())
+            usersApi.getContacts(SOURCE_1),
+            usersApi.getContacts(SOURCE_2),
+            usersApi.getContacts(SOURCE_3)
+        )
     }
 
     fun getAllUsersFromDb() = userDao.getAllUsers()
