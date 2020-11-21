@@ -1,7 +1,6 @@
 package ru.jdeveloperapps.konturtest.ui.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -85,8 +84,16 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             .subscribe({ text ->
                 mAdapter.filter.filter(text)
             }, { e ->
-                Log.d("TTT", "error: ${e.message}")
             }, {})
+
+        if (viewModel.lastSearch.isNotEmpty()) {
+            (searchView as SearchView).onActionViewExpanded()
+            searchView.setQuery(viewModel.lastSearch, false)
+        }
+
+        searchView.setOnClickListener {
+            (searchView as SearchView).onActionViewExpanded()
+        }
     }
 
     private fun setSwipeContainer() {
@@ -94,9 +101,6 @@ class ListFragment : Fragment(R.layout.fragment_list) {
             viewModel.updateData()
         }
 
-        searchView.setOnClickListener {
-            (searchView as SearchView).onActionViewExpanded()
-        }
     }
 
     private fun setRecyclerView() {
@@ -117,5 +121,10 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 bundle
             )
         }
+    }
+
+    override fun onPause() {
+        viewModel.lastSearch = searchView.query.toString()
+        super.onPause()
     }
 }

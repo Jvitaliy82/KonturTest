@@ -28,6 +28,7 @@ class MainViewModel @ViewModelInject constructor(
 
     val localData: LiveData<List<UserItem>> = usersRepository.getAllUsersFromDb()
     val stateData: MutableLiveData<Resourse> = MutableLiveData()
+    var lastSearch: String = ""
 
     fun updateData() {
         if (hasInternetConnection()) {

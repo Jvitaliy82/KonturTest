@@ -23,7 +23,6 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>(), Filter
     }
 
     fun submitList(listUserItem: List<UserItem>) {
-//        differ.submitList(listUserItem)
         currentList = listUserItem
         fullList.clear()
         fullList.addAll(listUserItem)
@@ -64,8 +63,6 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ListViewHolder>(), Filter
                     val filterPattern = charSequence.toString().trim()
                     filteredList = fullList.filter { item ->
                         item.name.contains(filterPattern, true) ||
-//                                item.phone.replace("""\D+""".toRegex(), "")
-//                                    .contains(filterPattern, true)
                         CharMatcher.inRange('0','9').retainFrom(item.phone).contains(filterPattern)
                     }.toMutableList()
                 }
