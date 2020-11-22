@@ -104,6 +104,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private fun setSwipeContainer() {
         swipe_container.setOnRefreshListener {
             viewModel.updateData()
+            searchView.setQuery("", true)
         }
 
     }
