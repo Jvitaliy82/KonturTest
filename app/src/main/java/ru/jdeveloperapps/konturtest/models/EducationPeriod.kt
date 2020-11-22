@@ -1,6 +1,5 @@
 package ru.jdeveloperapps.konturtest.models
 
-import ru.jdeveloperapps.konturtest.other.convertDate
 import java.io.Serializable
 
 data class EducationPeriod(
@@ -8,6 +7,8 @@ data class EducationPeriod(
     val start: String
 ) : Serializable {
     override fun toString(): String {
-        return "${convertDate(start)} - ${convertDate(end)}"
+        val dateStart = start.substringBefore('T')
+        val dateEnd = end.substringBefore('T')
+        return "$dateStart - $dateEnd"
     }
 }
