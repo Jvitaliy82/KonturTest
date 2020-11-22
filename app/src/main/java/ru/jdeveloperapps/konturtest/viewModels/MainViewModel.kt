@@ -39,7 +39,7 @@ class MainViewModel @ViewModelInject constructor(
             disposables.add(
                 usersRepository.getUsersFromNet()
                 .subscribeOn(Schedulers.io())
-                .map { listUserItem -> usersRepository.updateUsersInDb(listUserItem) }
+                .doOnNext { listUserItem -> usersRepository.updateUsersInDb(listUserItem) }
                 .subscribe({ }, { e ->
                     stateData.postValue(Resourse.Error(Event(getApplication<App>()
                         .getString(R.string.load_error))))
