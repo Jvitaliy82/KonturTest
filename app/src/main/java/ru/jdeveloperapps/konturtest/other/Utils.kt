@@ -17,3 +17,7 @@ fun convertDate(date: String): String {
     val dateFormat = SimpleDateFormat(LOCAL_DATE_FORMAT, Locale.getDefault())
     return dateFormat.format(calendar.time)
 }
+
+fun getDate(date: String) {
+    val calendarFormat = SimpleDateFormat(SERVER_DATE_FORMAT, Locale.getDefault())
+}

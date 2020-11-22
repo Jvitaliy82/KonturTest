@@ -11,6 +11,6 @@ class Constants {
         const val SOURCE_3 = "generated-03.json"
 
         const val SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ssXXX"
-        const val LOCAL_DATE_FORMAT = "yyyy-MM-dd"
+        const val LOCAL_DATE_FORMAT = "dd.MM.yyyy"
     }
 }
